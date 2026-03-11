@@ -1,3 +1,81 @@
 '''
 The 4 classes designed include Customers, Food Items, AllItems, and Transactions
 '''
+
+
+class FoodItem:
+    """A food item sold by ByteBites. Tracks name, price, category, and popularity rating."""
+
+    def __init__(self, name: str, price: float, category: str, popularity: float):
+        self._name = name
+        self._price = price
+        self._category = category
+        self._popularity = popularity
+
+    def getName(self) -> str:
+        return self._name
+
+    def getPrice(self) -> float:
+        return self._price
+
+    def getCategory(self) -> str:
+        return self._category
+
+    def getPopularity(self) -> float:
+        return self._popularity
+
+
+class Transaction:
+    """Groups selected items into a single purchase. Stores items and computes total cost."""
+
+    def __init__(self, items: list | None = None):
+        self._items = list(items) if items else []
+        self._totalCost = 0.0
+        self.computeTotal()
+
+    def getItems(self) -> list:
+        return list(self._items)
+
+    def getTotalCost(self) -> float:
+        return self._totalCost
+
+    def addItem(self, item: FoodItem) -> None:
+        self._items.append(item)
+        self.computeTotal()
+
+    def computeTotal(self) -> float:
+        self._totalCost = sum(item.getPrice() for item in self._items)
+        return self._totalCost
+
+
+class AllItems:
+    """Full collection of items. Holds all items and supports filtering by category."""
+
+    def __init__(self, items: list | None = None):
+        self._items = list(items) if items else []
+
+    def getItems(self) -> list:
+        return list(self._items)
+
+    def filterByCategory(self, category: str) -> list:
+        return [item for item in self._items if item.getCategory() == category]
+
+    def addItem(self, item: FoodItem) -> None:
+        self._items.append(item)
+
+
+class Customer:
+    """A ByteBites customer. Tracks name and past purchase history for verification."""
+
+    def __init__(self, name: str, orderHistory: list | None = None):
+        self._name = name
+        self._orderHistory = list(orderHistory) if orderHistory else []
+
+    def getName(self) -> str:
+        return self._name
+
+    def getOrderHistory(self) -> list:
+        return list(self._orderHistory)
+
+    def addTransaction(self, transaction: Transaction) -> None:
+        self._orderHistory.append(transaction)

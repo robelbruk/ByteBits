@@ -21,7 +21,6 @@ classDiagram
 
     class AllItems {
         -items: FoodItem[]
-        -category: String
         +getItems(): FoodItem[]
         +filterByCategory(category: String): FoodItem[]
         +addItem(item: FoodItem): void
