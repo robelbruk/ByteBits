@@ -7,6 +7,8 @@ class FoodItem:
     """A food item sold by ByteBites. Tracks name, price, category, and popularity rating."""
 
     def __init__(self, name: str, price: float, category: str, popularity: float):
+        if price < 0:
+            raise ValueError(f"Price cannot be negative: {price}")
         self._name = name
         self._price = price
         self._category = category
